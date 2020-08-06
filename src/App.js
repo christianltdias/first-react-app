@@ -14,35 +14,36 @@ class App extends Component {
   // You can use array destructuring
   state = {
     persons: [
-      { name: 'Christian', age: 25 },
-      { name: 'Holanda', age: 21 },
-      { name: 'Bruno', age: 32 }
+      { id: 'randomid', name: 'Christian', age: 25 },
+        { id: 'sads', name: 'Holanda', age: 21 },
+        { id: 'uniquekey', name: 'Bruno', age: 32 }
     ],
     showPersons: false
-  }
-
-
-  switchNameHandler = (newName) => {
-    // DON'T DO THIS 
-    // React doesn't know about this change- Use SetState() function instead
-    //this.state.persons[0].name = 'Another Name!'
-    this.setState({
-      persons: [
-        { name: newName, age: 25 },
-        { name: 'Holanda', age: 21 },
-        { name: 'Bruno', age: 32 }
-      ]
-    })
   }
 
   nameChangedHandle = (event) => {
     this.setState({
       persons: [
-        { name: 'Christian', age: 25 },
-        { name: event.target.value, age: 21 },
-        { name: 'Bruno', age: 32 }
+        { id: 'randomid', name: 'Christian', age: 25 },
+        { id: 'sads', name: event.target.value, age: 21 },
+        { id: 'uniquekey', name: 'Bruno', age: 32 }
       ]
     })
+  }
+
+  deletePersonHandler = (personIndex) => {
+    // We can change a state array immutably. That is, we create a copy
+    // of the array, change it, and after that update the original array
+    // In the other way, we would only get a pointer of the array and
+    // change it directly
+    // const persons = this.state.persons; -> get a pointer of the array
+
+    // Create a copy and then delete and update
+    const persons = this.state.persons.slice();
+    // Same result as
+    // const persons = [...this.state.persons]
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   }
 
   togglePersonsHandler = () => {
@@ -60,13 +61,18 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          {/* How to return a list of data */}
-          {this.state.persons.map((person) => {
+          {/* How to return a list of data 
+              React expects a key property when creating this kind
+              of list to help it update the elements
+              */}
+          {this.state.persons.map((person, index) => {
             return (<Person
+              click={() => this.deletePersonHandler(index)}
               name={person.name}
-              age={person.age} />)
+              age={person.age}
+              key={person.id} />)
           })}
-          
+
         </div>
       )
     }
