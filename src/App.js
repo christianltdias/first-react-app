@@ -15,20 +15,34 @@ class App extends Component {
   state = {
     persons: [
       { id: 'randomid', name: 'Christian', age: 25 },
-        { id: 'sads', name: 'Holanda', age: 21 },
-        { id: 'uniquekey', name: 'Bruno', age: 32 }
+      { id: 'sads', name: 'Holanda', age: 21 },
+      { id: 'uniquekey', name: 'Bruno', age: 32 }
     ],
     showPersons: false
   }
 
-  nameChangedHandle = (event) => {
+  nameChangedHandler = (event, id) => {
+    // We could also pass the index as a paramenter of the function
+    // This is an alternative
+    const personIndex = this.state.persons.findIndex( p =>{
+        return p.id === id;
+    });
+
+    // Gets a copy of the desired person object
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    person.name = event.target.value;
+    const persons = [
+      ...this.state.persons
+    ]
+
+    persons[personIndex] = person;
+
     this.setState({
-      persons: [
-        { id: 'randomid', name: 'Christian', age: 25 },
-        { id: 'sads', name: event.target.value, age: 21 },
-        { id: 'uniquekey', name: 'Bruno', age: 32 }
-      ]
-    })
+      persons: persons
+    });
   }
 
   deletePersonHandler = (personIndex) => {
@@ -70,7 +84,8 @@ class App extends Component {
               click={() => this.deletePersonHandler(index)}
               name={person.name}
               age={person.age}
-              key={person.id} />)
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />)
           })}
 
         </div>
