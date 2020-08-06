@@ -53,18 +53,12 @@ class App extends Component {
   }
 
   render() {
-    
-    return (
-      <div className="App" >
-        <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
-        <button
-          className='button1'
-          onClick={this.togglePersonsHandler}>
-          Show Persons</button>
 
-        {this.state.showPersons ? 
-          <div>
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
           <Person
             name={this.state.persons[0].name}
             age={this.state.persons[0].age} />
@@ -76,9 +70,22 @@ class App extends Component {
           <Person
             name={this.state.persons[2].name}
             age={this.state.persons[2].age} />
-        </div> : null
-        }
+        </div>
+      )
+    }
 
+    return (
+      <div className="App" >
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button
+          className='button1'
+          onClick={this.togglePersonsHandler}>
+          Show Persons</button>
+          
+          {/* returning persons from condition out return statement */}    
+          {persons}
+      
       </div>
     );
   }
