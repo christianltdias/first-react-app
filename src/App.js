@@ -24,8 +24,8 @@ class App extends Component {
   nameChangedHandler = (event, id) => {
     // We could also pass the index as a paramenter of the function
     // This is an alternative
-    const personIndex = this.state.persons.findIndex( p =>{
-        return p.id === id;
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
     });
 
     // Gets a copy of the desired person object
@@ -68,7 +68,19 @@ class App extends Component {
   }
 
   render() {
-
+    const style = {
+      backgroundColor: '#008CBA',
+      border: 'none',
+      color: 'white',
+      padding: '16px 32px',
+      textAlign: 'center',
+      textDecoration: 'none',
+      display: 'inline-block',
+      fontSize: '16px',
+      margin: '4px 2px',
+      transitionDuration: '0.4s',
+      cursor: 'pointer'
+    }
     let persons = null;
 
     // Conditional to generate the list of persons if boolean is true
@@ -89,7 +101,10 @@ class App extends Component {
           })}
 
         </div>
-      )
+      );
+      style.backgroundColor = 'white';
+      style.color = 'black';
+      style.border = '2px solid #008CBA';
     }
 
     return (
@@ -98,7 +113,8 @@ class App extends Component {
         <p>This is really working!</p>
         <button
           className='button1'
-          onClick={this.togglePersonsHandler}>
+          onClick={this.togglePersonsHandler}
+          style={style}>
           Show Persons</button>
 
         {/* returning persons from condition out return statement */}
