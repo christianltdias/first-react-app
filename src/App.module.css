@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.Button {
+  background-color: #008cba;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: lightblue;
+  color: black;
+}
+
+.ButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin: 0px auto;
+}
+
+.Button.Red {
+  background-color: red;
+  color:black;
+}
+
+.Button.Red:hover {
+  background-color: pink;
+}

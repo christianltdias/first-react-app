@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.module.css';
 import Person from './Person/Person';
 import styled from 'styled-components';
 
@@ -92,8 +92,8 @@ class App extends Component {
 
 
   render() {
-
     let persons = null;
+    let btnClass = [classes.Button]
 
     // Conditional to generate the list of persons if boolean is true
     if (this.state.showPersons) {
@@ -114,30 +114,30 @@ class App extends Component {
 
         </div>
       );
+
+      btnClass.push(classes.Red);
     }
 
-    const classes = [];
+    const insertClasses = [];
+
     if (this.state.persons.length <= 2) {
-      classes.push('red'); // Classes = ['red']
+      insertClasses.push(classes.red); // Classes = ['red']
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); // classes = ['red','bold']
+      insertClasses.push(classes.bold); // classes = ['red','bold']
     }
 
     return (
-      <div className="App" >
+      <div className={classes.App} >
         <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <div style={{
-          display: 'flex', flexDirection: 'column',
-          width: '30%', margin: '0px auto'
-        }}>
+        <p className={insertClasses.join(' ')}>This is really working!</p>
+        <div className={classes.ButtonsContainer}>
           <button
-            className='button'
+            className={btnClass.join(' ')}
             onClick={this.togglePersonsHandler}>
             Show Persons</button>
           <button
-            className='button'
+            className={classes.Button}
             onClick={() => this.addDefaultPerson(this.state.persons)}>
             Add Person</button>
         </div>
