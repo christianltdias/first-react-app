@@ -1,7 +1,27 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium, { StyleRoot } from 'radium';
+import styled from 'styled-components';
+
+// Creating styled button component with styled-component lib
+const StyledButton = styled.button`
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: lightblue;
+    color: black;
+  }
+`
+
 
 // class App extends Component 
 
@@ -90,27 +110,27 @@ class App extends Component {
 
 
   render() {
-    const style = {
-      backgroundColor: '#008CBA',
-      border: 'none',
-      color: 'white',
-      padding: '16px 32px',
-      textAlign: 'center',
-      textDecoration: 'none',
-      fontSize: '16px',
-      margin: '4px 2px',
-      transitionDuration: '0.4s',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightblue',
-        color: 'black'
-      }
-    }
+    // const style = {
+    //   backgroundColor: '#008CBA',
+    //   border: 'none',
+    //   color: 'white',
+    //   padding: '16px 32px',
+    //   textAlign: 'center',
+    //   textDecoration: 'none',
+    //   fontSize: '16px',
+    //   margin: '4px 2px',
+    //   transitionDuration: '0.4s',
+    //   cursor: 'pointer',
+    //   ':hover': {
+    //     backgroundColor: 'lightblue',
+    //     color: 'black'
+    //   }
+    // }
     // ':hover' property just after using the Random
     // import and usage. We need also to wrap the export app
     // With the Random component
 
-    const button_style = { ...style };
+    // const button_style = { ...style };
 
     let persons = null;
 
@@ -134,11 +154,11 @@ class App extends Component {
         </div>
       );
 
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'lightred',
-        color: 'black'
-      }
+      // style.backgroundColor = 'red';
+      // style[':hover'] = {
+      //   backgroundColor: 'lightred',
+      //   color: 'black'
+      // }
     }
 
     const classes = [];
@@ -150,7 +170,6 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
         <div className="App" >
           <h1>Hi, I'm a React App</h1>
           <p className={classes.join(' ')}>This is really working!</p>
@@ -158,11 +177,9 @@ class App extends Component {
             display: 'flex', flexDirection: 'column',
             width: '30%', margin: '0px auto'
           }}>
-            <button
-              className='button1'
-              onClick={this.togglePersonsHandler}
-              style={style}>
-              Show Persons</button>
+            <StyledButton
+              onClick={this.togglePersonsHandler}>
+              Show Persons</StyledButton>
             {/* <button
             style={button_style}
             onClick={() => this.addDefaultPerson(this.state.persons)}>
@@ -173,7 +190,6 @@ class App extends Component {
           {persons}
 
         </div>
-      </StyleRoot>
     );
   }
 
@@ -181,4 +197,4 @@ class App extends Component {
   // return React.createElement('div', {className: 'App'}, React.createElement('h1',null,'Hi, I'm a React App'))
 }
 
-export default Radium(App);
+export default App;
