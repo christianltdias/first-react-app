@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium from 'radium';
 
 // class App extends Component 
 
@@ -45,6 +46,26 @@ class App extends Component {
     });
   }
 
+  addDefaultPerson = (array) => {
+    const persons = [
+      ...this.state.persons,
+      { id: this.makeid(5), name: 'Default', age: 99 }
+    ]
+    this.setState({
+      persons: persons
+    })
+  }
+
+  makeid = (length) => {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   deletePersonHandler = (personIndex) => {
     // We can change a state array immutably. That is, we create a copy
     // of the array, change it, and after that update the original array
@@ -67,6 +88,7 @@ class App extends Component {
     })
   }
 
+
   render() {
     const style = {
       backgroundColor: '#008CBA',
@@ -75,12 +97,21 @@ class App extends Component {
       padding: '16px 32px',
       textAlign: 'center',
       textDecoration: 'none',
-      display: 'inline-block',
       fontSize: '16px',
       margin: '4px 2px',
       transitionDuration: '0.4s',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightblue',
+        color: 'black'
+      }
     }
+    // ':hover' property just after using the Random
+    // import and usage. We need also to wrap the export app
+    // With the Random component
+
+    const button_style = { ...style };
+
     let persons = null;
 
     // Conditional to generate the list of persons if boolean is true
@@ -102,16 +133,19 @@ class App extends Component {
 
         </div>
       );
-      style.backgroundColor = 'white';
-      style.color = 'black';
-      style.border = '2px solid #008CBA';
+
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor:'lightred',
+        color: 'black'
+      }
     }
 
     const classes = [];
-    if(this.state.persons.length <= 2){
+    if (this.state.persons.length <= 2) {
       classes.push('red'); // Classes = ['red']
     }
-    if (this.state.persons.length <= 1){
+    if (this.state.persons.length <= 1) {
       classes.push('bold'); // classes = ['red','bold']
     }
 
@@ -119,11 +153,20 @@ class App extends Component {
       <div className="App" >
         <h1>Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
-        <button
-          className='button1'
-          onClick={this.togglePersonsHandler}
-          style={style}>
-          Show Persons</button>
+        <div style={{
+          display: 'flex', flexDirection: 'column',
+          width: '30%', margin: '0px auto'
+        }}>
+          <button
+            className='button1'
+            onClick={this.togglePersonsHandler}
+            style={style}>
+            Show Persons</button>
+          {/* <button
+            style={button_style}
+            onClick={() => this.addDefaultPerson(this.state.persons)}>
+            Add default Person</button> */}
+        </div>
 
         {/* returning persons from condition out return statement */}
         {persons}
@@ -136,4 +179,4 @@ class App extends Component {
   // return React.createElement('div', {className: 'App'}, React.createElement('h1',null,'Hi, I'm a React App'))
 }
 
-export default App;
+export default Radium(App);
