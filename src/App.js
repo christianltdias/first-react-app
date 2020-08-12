@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 // Creating styled button component with styled-component lib
 const StyledButton = styled.button`
-  background-color: #008CBA;
+  background-color: ${props => props.alt ? 'red' : '#008CBA'};
   border: none;
   color: white;
   padding: 16px 32px;
@@ -17,7 +17,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   
   &:hover {
-    background-color: lightblue;
+    background-color: ${props => props.alt ? 'pink' : 'lightblue'};
     color: black;
   }
 `
@@ -110,27 +110,6 @@ class App extends Component {
 
 
   render() {
-    // const style = {
-    //   backgroundColor: '#008CBA',
-    //   border: 'none',
-    //   color: 'white',
-    //   padding: '16px 32px',
-    //   textAlign: 'center',
-    //   textDecoration: 'none',
-    //   fontSize: '16px',
-    //   margin: '4px 2px',
-    //   transitionDuration: '0.4s',
-    //   cursor: 'pointer',
-    //   ':hover': {
-    //     backgroundColor: 'lightblue',
-    //     color: 'black'
-    //   }
-    // }
-    // ':hover' property just after using the Random
-    // import and usage. We need also to wrap the export app
-    // With the Random component
-
-    // const button_style = { ...style };
 
     let persons = null;
 
@@ -153,12 +132,6 @@ class App extends Component {
 
         </div>
       );
-
-      // style.backgroundColor = 'red';
-      // style[':hover'] = {
-      //   backgroundColor: 'lightred',
-      //   color: 'black'
-      // }
     }
 
     const classes = [];
@@ -170,26 +143,27 @@ class App extends Component {
     }
 
     return (
-        <div className="App" >
-          <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <div style={{
-            display: 'flex', flexDirection: 'column',
-            width: '30%', margin: '0px auto'
-          }}>
-            <StyledButton
-              onClick={this.togglePersonsHandler}>
-              Show Persons</StyledButton>
-            {/* <button
-            style={button_style}
+      <div className="App" >
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <div style={{
+          display: 'flex', flexDirection: 'column',
+          width: '30%', margin: '0px auto'
+        }}>
+          <StyledButton
+            alt={this.state.showPersons}
+            onClick={this.togglePersonsHandler}>
+            Show Persons</StyledButton>
+          <StyledButton
+            alt={false}
             onClick={() => this.addDefaultPerson(this.state.persons)}>
-            Add default Person</button> */}
-          </div>
-
-          {/* returning persons from condition out return statement */}
-          {persons}
-
+            Add Person</StyledButton>
         </div>
+
+        {/* returning persons from condition out return statement */}
+        {persons}
+
+      </div>
     );
   }
 
