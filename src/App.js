@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium from 'radium';
+import Radium, { StyleRoot } from 'radium';
 
 // class App extends Component 
 
@@ -136,7 +136,7 @@ class App extends Component {
 
       style.backgroundColor = 'red';
       style[':hover'] = {
-        backgroundColor:'lightred',
+        backgroundColor: 'lightred',
         color: 'black'
       }
     }
@@ -150,28 +150,30 @@ class App extends Component {
     }
 
     return (
-      <div className="App" >
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <div style={{
-          display: 'flex', flexDirection: 'column',
-          width: '30%', margin: '0px auto'
-        }}>
-          <button
-            className='button1'
-            onClick={this.togglePersonsHandler}
-            style={style}>
-            Show Persons</button>
-          {/* <button
+      <StyleRoot>
+        <div className="App" >
+          <h1>Hi, I'm a React App</h1>
+          <p className={classes.join(' ')}>This is really working!</p>
+          <div style={{
+            display: 'flex', flexDirection: 'column',
+            width: '30%', margin: '0px auto'
+          }}>
+            <button
+              className='button1'
+              onClick={this.togglePersonsHandler}
+              style={style}>
+              Show Persons</button>
+            {/* <button
             style={button_style}
             onClick={() => this.addDefaultPerson(this.state.persons)}>
             Add default Person</button> */}
+          </div>
+
+          {/* returning persons from condition out return statement */}
+          {persons}
+
         </div>
-
-        {/* returning persons from condition out return statement */}
-        {persons}
-
-      </div>
+      </StyleRoot>
     );
   }
 
