@@ -3,24 +3,6 @@ import './App.css';
 import Person from './Person/Person';
 import styled from 'styled-components';
 
-// Creating styled button component with styled-component lib
-const StyledButton = styled.button`
-  background-color: ${props => props.alt ? 'red' : '#008CBA'};
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: ${props => props.alt ? 'pink' : 'lightblue'};
-    color: black;
-  }
-`
 
 
 // class App extends Component 
@@ -150,14 +132,14 @@ class App extends Component {
           display: 'flex', flexDirection: 'column',
           width: '30%', margin: '0px auto'
         }}>
-          <StyledButton
-            alt={this.state.showPersons}
+          <button
+            className='button'
             onClick={this.togglePersonsHandler}>
-            Show Persons</StyledButton>
-          <StyledButton
-            alt={false}
+            Show Persons</button>
+          <button
+            className='button'
             onClick={() => this.addDefaultPerson(this.state.persons)}>
-            Add Person</StyledButton>
+            Add Person</button>
         </div>
 
         {/* returning persons from condition out return statement */}
