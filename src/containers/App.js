@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
-
-
+import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit'
 
 // class App extends Component 
 
@@ -94,57 +93,27 @@ class App extends Component {
 
   render() {
     let persons = null;
-    let btnClass = [classes.Button]
 
     // Conditional to generate the list of persons if boolean is true
     if (this.state.showPersons) {
       persons = (
         <div>
-          {/* How to return a list of data 
-              React expects a key property when creating this kind
-              of list to help it update the elements
-              */}
-          {this.state.persons.map((person, index) => {
-            return (<ErrorBoundary key={person.id}> 
-              <Person
-                click={() => this.deletePersonHandler(index)}
-                name={person.name}
-                age={person.age}
-                changed={(event) => this.nameChangedHandler(event, person.id)} />
-            </ErrorBoundary>)
-          })}
-
+          {/* Created Persons component to load person list of components */}
+          <Persons persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler}/>
         </div>
       );
 
-      btnClass.push(classes.Red);
-    }
-
-    const insertClasses = [];
-
-    if (this.state.persons.length <= 2) {
-      insertClasses.push(classes.red); // Classes = ['red']
-    }
-    if (this.state.persons.length <= 1) {
-      insertClasses.push(classes.bold); // classes = ['red','bold']
     }
 
     return (
       <div className={classes.App} >
-        <h1>Hi, I'm a React App</h1>
-        <p className={insertClasses.join(' ')}>This is really working!</p>
-        <div className={classes.ButtonsContainer}>
-          <button
-            className={btnClass.join(' ')}
-            onClick={this.togglePersonsHandler}>
-            Show Persons</button>
-          <button
-            className={classes.Button}
-            onClick={() => this.addDefaultPerson(this.state.persons)}>
-            Add Person</button>
-        </div>
-
-        {/* returning persons from condition out return statement */}
+        <Cockpit
+        showPersons = {this.state.showPersons}
+        persons={this.state.persons} 
+        toggle={this.togglePersonsHandler}
+        add={this.addDefaultPerson}/>
         {persons}
 
       </div>
