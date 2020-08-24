@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
-import Person from '../components/Persons/Person/Person';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit'
 
 // class App extends Component 
 
 class App extends Component {
-  // Defining a component as a function using Hook to track the state of
-  // properties
 
-  // the useState returns two elements
-  // first is the state
-  // second is the function to change this state
-  // You can use array destructuring
   state = {
     persons: [
       { id: 'randomid', name: 'Christian', age: 25 },
       { id: 'sads', name: 'Holanda', age: 21 },
       { id: 'uniquekey', name: 'Bruno', age: 32 }
     ],
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   }
+
 
   nameChangedHandler = (event, id) => {
     // We could also pass the index as a paramenter of the function
@@ -90,30 +85,38 @@ class App extends Component {
     })
   }
 
+  deleteCockpit = () => {
+    this.setState({ showCockpit: false })
+  }
 
   render() {
     let persons = null;
+    let cockpit = null;
 
     // Conditional to generate the list of persons if boolean is true
     if (this.state.showPersons) {
-      persons = (
-        <div>
-          {/* Created Persons component to load person list of components */}
-          <Persons persons={this.state.persons}
-          clicked={this.deletePersonHandler}
-          changed={this.nameChangedHandler}/>
-        </div>
-      );
-
+      persons = <Persons persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} />
     }
+
+    // Conditional to generate cockipit
+    if (this.state.showCockpit) {
+      cockpit = <Cockpit
+        title={this.props.appTitle}
+        showPersons={this.state.showPersons}
+        personsLength={this.state.persons.length}
+        toggle={this.togglePersonsHandler}
+        add={this.addDefaultPerson} />
+    }
+
 
     return (
       <div className={classes.App} >
-        <Cockpit
-        showPersons = {this.state.showPersons}
-        persons={this.state.persons} 
-        toggle={this.togglePersonsHandler}
-        add={this.addDefaultPerson}/>
+        <button
+          onClick={this.deleteCockpit}
+          className={classes.Button}>Delete cockipit</button>
+        {cockpit}
         {persons}
 
       </div>
