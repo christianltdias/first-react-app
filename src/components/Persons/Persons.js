@@ -4,12 +4,19 @@ import Person from './Person/Person'
 
 class Persons extends Component {
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         console.log('{Persons.js} componentWillUnmount - cleanup after rendering')
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(nextProps.persons !== this.props.persons){
+    // Extending PureComponent will be the same
+    // as it contains a default shouldcomponentupdate with
+    // props change check
+    shouldComponentUpdate(nextProps, nextState) {
+        if (
+            nextProps.persons !== this.props.persons ||
+            nextProps.changed !== this.props.changed ||
+            nextProps.clicked !== this.props.clicked
+        ) {
             return true;
         }
         return false;

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit'
+import Aux from '../hoc/Auxiliary';
+import WithClass from '../hoc/withClass'
 
 // class App extends Component 
 
@@ -14,7 +16,8 @@ class App extends Component {
       { id: 'uniquekey', name: 'Bruno', age: 32 }
     ],
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   }
 
 
@@ -38,8 +41,11 @@ class App extends Component {
 
     persons[personIndex] = person;
 
-    this.setState({
-      persons: persons
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
     });
   }
 
@@ -112,14 +118,13 @@ class App extends Component {
 
 
     return (
-      <div className={classes.App} >
+      <Aux>
         <button
           onClick={this.deleteCockpit}
           className={classes.Button}>Delete cockipit</button>
         {cockpit}
         {persons}
-
-      </div>
+      </Aux>
     );
   }
 
@@ -127,4 +132,4 @@ class App extends Component {
   // return React.createElement('div', {className: 'App'}, React.createElement('h1',null,'Hi, I'm a React App'))
 }
 
-export default App;
+export default WithClass(App, classes.App);
