@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+
 import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit'
 import Aux from '../hoc/Auxiliary';
 import WithClass from '../hoc/withClass'
+import AuthContext from '../context/auth-context'
 
 // class App extends Component 
 
@@ -17,7 +19,8 @@ class App extends Component {
     ],
     showPersons: false,
     showCockpit: true,
-    changeCounter: 0
+    changeCounter: 0,
+    authenticated: false
   }
 
 
@@ -95,6 +98,13 @@ class App extends Component {
     this.setState({ showCockpit: false })
   }
 
+  loginHandler = () => {
+    console.log('Log in called')
+    this.setState({
+      authenticated: true
+    })
+  }
+
   render() {
     let persons = null;
     let cockpit = null;
@@ -119,11 +129,23 @@ class App extends Component {
 
     return (
       <Aux>
-        <button
-          onClick={this.deleteCockpit}
-          className={classes.Button}>Delete cockipit</button>
-        {cockpit}
-        {persons}
+
+        <AuthContext.Provider value={{ authenticated: this.state.authenticated, login: this.loginHandler }}>
+          <button
+            onClick={this.deleteCockpit}
+            className={classes.Button}>Delete cockipit</button>
+
+          <AuthContext.Consumer>
+            {(context) => <button
+              onClick={context.login}
+              className={classes.Button}>Log in</button>}
+          </AuthContext.Consumer>
+
+
+          {cockpit}
+          {persons}
+        </AuthContext.Provider>
+
       </Aux>
     );
   }

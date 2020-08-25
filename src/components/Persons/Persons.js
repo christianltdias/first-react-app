@@ -15,7 +15,8 @@ class Persons extends Component {
         if (
             nextProps.persons !== this.props.persons ||
             nextProps.changed !== this.props.changed ||
-            nextProps.clicked !== this.props.clicked
+            nextProps.clicked !== this.props.clicked ||
+            nextProps.authentication !== this.props.authentication
         ) {
             return true;
         }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import classes from './Person.module.css';
 import Aux from '../../../hoc/Auxiliary';
 import WithClass from '../../../hoc/withClass';
+import AuthContext from '../../../context/auth-context';
 
 // Defines a component by function. Not really a React Component
 class Person extends Component {
@@ -13,9 +14,14 @@ class Person extends Component {
     //     this.inputElement = React.createRef();
     // }
 
+    // With this creation. We can use this.context directly 
+    // without the need of AuthContext
+    static contextType = AuthContext;
+
     // Setting the focus to the person input element after rendering
-    componentDidMount(){
+    componentDidMount() {
         this.inputElement.focus()
+        console.log(this.context.authenticated)
         // when creating red from constructor
         // this.inputElement.current.focus()
     }
@@ -23,12 +29,17 @@ class Person extends Component {
     render() {
         return (
             <Aux>
+                {/* <AuthContext.Consumer>
+                    {(context) => */}
+                        {this.context.authenticated ? <p>Authenticated!</p> : <p>Please, Log in</p>}
+                    {/* }
+                </AuthContext.Consumer> */}
                 < p onClick={this.props.click} >
                     I'm {this.props.name} and I'm {this.props.age} years old!
                 </p >
                 <p>{this.props.children}</p>
                 <input
-                    ref={(inputEl) => {this.inputElement = inputEl}}
+                    ref={(inputEl) => { this.inputElement = inputEl }}
                     // ref = {this.inputElement} -- When creating from constructor
                     type="text"
                     onChange={this.props.changed}
