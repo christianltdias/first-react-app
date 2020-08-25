@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.Container {
+  margin-top: 10px;
+}
+
 .red {
   color: red;
 }
@@ -42,4 +46,22 @@
 
 .Button.Red:hover {
   background-color: pink;
+}
+
+.Button.Green {
+  background-color: #00dd10;
+  color:black;
+}
+
+.Button.Green:hover {
+  background-color: #70dd80;
+}
+
+.Button.Grey {
+  background-color: #808080;
+  color:black;
+}
+
+.Button.Grey:hover {
+  background-color: #ccc;
 }

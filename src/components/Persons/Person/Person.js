@@ -31,19 +31,28 @@ class Person extends Component {
             <Aux>
                 {/* <AuthContext.Consumer>
                     {(context) => */}
-                        {this.context.authenticated ? <p>Authenticated!</p> : <p>Please, Log in</p>}
-                    {/* }
+                {this.context.authenticated ? <p>Authenticated!</p> : <p>Please, Log in</p>}
+                {/* }
                 </AuthContext.Consumer> */}
                 < p onClick={this.props.click} >
                     I'm {this.props.name} and I'm {this.props.age} years old!
                 </p >
                 <p>{this.props.children}</p>
-                <input
-                    ref={(inputEl) => { this.inputElement = inputEl }}
-                    // ref = {this.inputElement} -- When creating from constructor
-                    type="text"
-                    onChange={this.props.changed}
-                    value={this.props.name} />
+                <div>
+                    <input
+                        ref={(inputEl) => { this.inputElement = inputEl }}
+                        // ref = {this.inputElement} -- When creating from constructor
+                        type="text"
+                        onChange={this.props.nameChanged}
+                        value={this.props.name} />
+
+                    <input
+                        className={classes.NumberPicker}
+                        // ref = {this.inputElement} -- When creating from constructor
+                        type="number"
+                        onChange={this.props.ageChanged}
+                        value={this.props.age} />
+                </div>
             </Aux>
         );
     }

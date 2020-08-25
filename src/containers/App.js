@@ -52,10 +52,50 @@ class App extends Component {
     });
   }
 
+  ageChangedHandler = (event, id) => {
+
+    let age = event.target.value;
+
+    if (age > 999) {
+      event.target.value = age = 999;
+    } else if (age < 0 || age === '00') {
+      event.target.value = age = 0;
+    } else if (age[0] === '0' & age[1] !== undefined) {
+
+      event.target.value = age = age.slice(1, age.length);
+    }
+
+
+    // We could also pass the index as a paramenter of the function
+    // This is an alternative
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    // Gets a copy of the desired person object
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    person.age = age;
+
+    const persons = [
+      ...this.state.persons
+    ]
+
+    persons[personIndex] = person;
+
+    this.setState((prevState, props) => {
+      return {
+        persons: persons
+      };
+    });
+  }
+
   addDefaultPerson = (array) => {
     const persons = [
       ...this.state.persons,
-      { id: this.makeid(5), name: 'Default', age: 99 }
+      { id: this.makeid(5), name: 'Default', age: Math.floor(Math.random() * 100) }
     ]
     this.setState({
       persons: persons
@@ -95,7 +135,16 @@ class App extends Component {
   }
 
   deleteCockpit = () => {
-    this.setState({ showCockpit: false })
+    let flag = true;
+
+    if (this.state.showCockpit) {
+      flag = false;
+    }
+
+    this.setState({
+      showCockpit: flag,
+      showPersons: false
+    })
   }
 
   loginHandler = () => {
@@ -113,7 +162,8 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = <Persons persons={this.state.persons}
         clicked={this.deletePersonHandler}
-        changed={this.nameChangedHandler} />
+        nameChanged={this.nameChangedHandler}
+        ageChanged={this.ageChangedHandler} />
     }
 
     // Conditional to generate cockipit
@@ -128,17 +178,17 @@ class App extends Component {
 
 
     return (
-      <Aux>
+      <Aux className={classes.Container}>
 
         <AuthContext.Provider value={{ authenticated: this.state.authenticated, login: this.loginHandler }}>
           <button
             onClick={this.deleteCockpit}
-            className={classes.Button}>Delete cockipit</button>
+            className={[classes.Button, classes.Grey].join(' ')}>{this.state.showCockpit ? 'Delete Cockpit' : 'Show Cockpit'}</button>
 
           <AuthContext.Consumer>
             {(context) => <button
               onClick={context.login}
-              className={classes.Button}>Log in</button>}
+              className={[classes.Button, classes.Green].join(' ')}>Log in</button>}
           </AuthContext.Consumer>
 
 
