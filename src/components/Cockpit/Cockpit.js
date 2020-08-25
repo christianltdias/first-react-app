@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.module.css';
 
 const Cockpit = props => {
+    // Creating  a reference with function component using Hooks
+    const toggleBtnRef = useRef(null);
+
 
     // useEffect is a hook that is called
     // the second argument is the parameter that
@@ -9,12 +12,10 @@ const Cockpit = props => {
     // An empty array, the function is called once
     useEffect(() => {
         console.log('{Cockpit.js} useEffect')
-        const timer = setTimeout(() => {
-            alert('Saved data to cloud')
-        }, 1000);
+        
+        toggleBtnRef.current.click();
 
         return () => {
-            clearTimeout(timer);
             console.log('{Cockput.js} cleanup function called at end of render cycle')
         };
 
@@ -47,7 +48,8 @@ const Cockpit = props => {
             <div className={classes.ButtonsContainer}>
                 <button
                     className={btnClass.join(' ')}
-                    onClick={props.toggle}>
+                    onClick={props.toggle}
+                    ref={toggleBtnRef}>
                     Show Persons</button>
                 <button
                     className={classes.Button}

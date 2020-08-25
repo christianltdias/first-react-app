@@ -7,6 +7,18 @@ import WithClass from '../../../hoc/withClass';
 
 // Defines a component by function. Not really a React Component
 class Person extends Component {
+    // Another way of creating  a refence
+    // constructor(props){
+    //     super(props); 
+    //     this.inputElement = React.createRef();
+    // }
+
+    // Setting the focus to the person input element after rendering
+    componentDidMount(){
+        this.inputElement.focus()
+        // when creating red from constructor
+        // this.inputElement.current.focus()
+    }
 
     render() {
         return (
@@ -15,7 +27,10 @@ class Person extends Component {
                     I'm {this.props.name} and I'm {this.props.age} years old!
                 </p >
                 <p>{this.props.children}</p>
-                <input type="text"
+                <input
+                    ref={(inputEl) => {this.inputElement = inputEl}}
+                    // ref = {this.inputElement} -- When creating from constructor
+                    type="text"
                     onChange={this.props.changed}
                     value={this.props.name} />
             </Aux>
